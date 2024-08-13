@@ -1,4 +1,5 @@
-<%
+# frozen_string_literal: true
+
 # Copyright (C) 2024 - present Instructure, Inc.
 #
 # This file is part of Canvas.
@@ -14,14 +15,12 @@
 #
 # You should have received a copy of the GNU Affero General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
-%><!-- Hotjar Tracking Code -->
-  <script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:3758065,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
+#
+
+class AddEditedAtToDiscussionTopic < ActiveRecord::Migration[7.1]
+  tag :predeploy
+  def change
+    add_column :discussion_topics, :edited_at, :datetime
+    add_column :discussion_entries, :edited_at, :datetime
+  end
+end

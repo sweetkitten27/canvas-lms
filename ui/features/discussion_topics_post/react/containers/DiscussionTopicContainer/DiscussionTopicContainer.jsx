@@ -282,7 +282,7 @@ export const DiscussionTopicContainer = ({
                     borderRadius={responsiveProps?.border?.radius}
                     borderStyle="solid"
                     borderColor="primary"
-                    padding="xx-small 0 small"
+                    padding="small"
                     margin="0 0 small 0"
                   >
                     {!props.discussionTopic.availableForUser ? (
@@ -319,7 +319,7 @@ export const DiscussionTopicContainer = ({
                             )
                           )}
                         </Flex.Item>
-                        <Flex.Item shouldShrink={true} shouldGrow={true}>
+                        <Flex.Item shouldShrink={true} shouldGrow={true} overflowY='hidden'>
                           <DiscussionEntryContainer
                             isTopic={true}
                             postUtilities={
@@ -413,12 +413,12 @@ export const DiscussionTopicContainer = ({
                             isSplitView={false}
                             editor={props.discussionTopic.editor}
                             createdAt={props.discussionTopic.createdAt}
-                            updatedAt={props.discussionTopic.updatedAt}
+                            editedAt={props.discussionTopic.editedAt}
                             timingDisplay={DateHelper.formatDatetimeForDiscussions(
                               props.discussionTopic.createdAt
                             )}
                             editedTimingDisplay={DateHelper.formatDatetimeForDiscussions(
-                              props.discussionTopic.updatedAt
+                              props.discussionTopic.editedAt
                             )}
                             isTopicAuthor={true}
                             attachment={props.discussionTopic.attachment}

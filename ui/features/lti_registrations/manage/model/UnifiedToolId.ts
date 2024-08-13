@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 - present Instructure, Inc.
+ * Copyright (C) 2024 - present Instructure, Inc.
  *
  * This file is part of Canvas.
  *
@@ -16,18 +16,12 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import PortfolioLayout from './PortfolioLayout'
-import PortfolioEdit from './edit/PortfolioEdit'
-import PortfolioDashboard from './PortfolioDashboard'
-import PortfolioCreate from './PortfolioCreate'
-import PortfolioViewPage from './PortfolioViewPage'
-import PortfolioView from './PortfolioView'
+import {z} from 'zod'
 
-export {
-  PortfolioLayout,
-  PortfolioEdit,
-  PortfolioDashboard,
-  PortfolioCreate,
-  PortfolioViewPage,
-  PortfolioView,
-}
+export const ZUnifiedToolId = z.string().brand('UnifiedToolId')
+
+/**
+ * A string that uniquely identifies a tool across Canvas instances.
+ * Defined & maintained in LP.
+ */
+export type UnifiedToolId = z.infer<typeof ZUnifiedToolId>

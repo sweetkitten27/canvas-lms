@@ -63,13 +63,9 @@ const AuthorInfoBase = ({breakpoints, ...props}) => {
   // author is not a role found in courseroles,
   // so we can always assume that if there is 1 course role,
   // the author in this component will have to roles (author, and the course role)
-  const hasMultipleRoles = props.author?.courseRoles?.length > 0
-
-  const nameAndRoleDirection = breakpoints.desktopNavOpen ? 'row' : 'column'
-  const timestampTextSize = breakpoints.desktopNavOpen && !props.threadMode ? 'small' : 'x-small'
-  const authorNameTextSize = breakpoints.desktopNavOpen && props.threadMode ? 'small' : 'medium'
+  const timestampTextSize = breakpoints.desktopNavOpen ? 'small' : 'x-small'
+  const authorNameTextSize = breakpoints.desktopNavOpen ? 'small' : 'medium'
   const authorInfoPadding = breakpoints.mobileOnly ? '0 0 0 x-small' : '0 0 0 small'
-  const authorNamePadding = breakpoints.mobileOnly ? 'xxx-small small xxx-small 0' : '0 small 0 0'
   let avatarSize = 'small'
 
   if (breakpoints.desktopNavOpen) {
@@ -134,38 +130,34 @@ const AuthorInfoBase = ({breakpoints, ...props}) => {
         <Flex direction="column" margin={authorInfoPadding}>
           {hasAuthor && (
             <Flex.Item>
-              <Flex direction={hasMultipleRoles ? 'column' : nameAndRoleDirection}>
-                <Flex.Item padding={authorNamePadding}>
-                  <Text
-                    weight="bold"
-                    size={authorNameTextSize}
-                    lineHeight="condensed"
-                    data-testid="author_name"
-                    wrap="break-word"
-                  >
-                    {isAnonymous(props) ? (
-                      getDisplayName(props)
-                    ) : (
-                      <NameLink
-                        userType="author"
-                        user={props.author}
-                        authorNameTextSize={authorNameTextSize}
-                        searchTerm={searchTerm}
-                        discussionEntryProps={props}
-                        mobileOnly={breakpoints.mobileOnly}
-                      />
-                    )}
-                  </Text>
-                </Flex.Item>
-                <Flex.Item margin="0 0 0 xx-small" overflowY="hidden">
-                  <RolePillContainer
-                    discussionRoles={resolveAuthorRoles(
-                      props.isTopicAuthor,
-                      props.author?.courseRoles
-                    )}
-                    data-testid="pill-container"
-                  />
-                </Flex.Item>
+              <Flex wrap='wrap' gap="0 small">
+                <Text
+                  weight="bold"
+                  size={authorNameTextSize}
+                  lineHeight="condensed"
+                  data-testid="author_name"
+                  wrap="break-word"
+                >
+                  {isAnonymous(props) ? (
+                    getDisplayName(props)
+                  ) : (
+                    <NameLink
+                      userType="author"
+                      user={props.author}
+                      authorNameTextSize={authorNameTextSize}
+                      searchTerm={searchTerm}
+                      discussionEntryProps={props}
+                      mobileOnly={breakpoints.mobileOnly}
+                    />
+                  )}
+                </Text>
+                <RolePillContainer
+                  discussionRoles={resolveAuthorRoles(
+                    props.isTopicAuthor,
+                    props.author?.courseRoles
+                  )}
+                  data-testid="pill-container"
+                />
                 {ENV.discussions_reporting &&
                   props.reportTypeCounts &&
                   props.reportTypeCounts.total && (
@@ -225,7 +217,6 @@ AuthorInfoBase.propTypes = {
    * Boolean to determine if we are in the split view
    */
   createdAt: PropTypes.string,
-  updatedAt: PropTypes.string,
   /**
    * Display text for the relative time information. This prop is expected
    * to be provided as a string of the exact text to be displayed, not a
@@ -261,7 +252,7 @@ AuthorInfoBase.propTypes = {
 
 const Timestamps = props => {
   const editText = useMemo(() => {
-    if (!props.editedTimingDisplay || props.createdAt === props.updatedAt) {
+    if (!props.editedTimingDisplay) {
       return null
     }
 
@@ -292,7 +283,7 @@ const Timestamps = props => {
         editedTimingDisplay: props.editedTimingDisplay,
       })
     }
-  }, [props.editedTimingDisplay, props.createdAt, props.updatedAt, props.editor, props.author])
+  }, [props.editedTimingDisplay, props.createdAt, props.editor, props.author])
   const timestampsPadding = props.mobileOnly ? '0 xx-small 0 0' : 'xx-small xx-small xx-small 0'
   return (
     <Flex wrap="wrap">
@@ -335,7 +326,6 @@ Timestamps.propTypes = {
   author: User.shape,
   editor: User.shape,
   createdAt: PropTypes.string,
-  updatedAt: PropTypes.string,
   timingDisplay: PropTypes.string,
   editedTimingDisplay: PropTypes.string,
   lastReplyAtDisplay: PropTypes.string,

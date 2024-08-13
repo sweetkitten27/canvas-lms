@@ -9,10 +9,9 @@ development:
   # # the only reason to define a server list here is if you want to use a
   # # separate redis instance for cache and for data.
   #
-  # url:
-  # - redis://localhost/0
-  # connect_timeout: 0.5
-  # circuit_breaker:
-  #   error_threshold: 1
-  #   error_timeout: 2
-  #
+test:
+  cache_store: redis_cache_store
+development:
+  cache_store: redis_cache_store
+production:
+  cache_store: redis_cache_store
